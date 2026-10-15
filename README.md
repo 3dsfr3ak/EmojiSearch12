@@ -2,6 +2,8 @@
 
 Emoji-Suche für die Stock-Tastatur unter **iOS 12** (Jailbreak) – wie ab iOS 14, mit Suchleiste oberhalb der Emojis.
 
+<p align="center"><img src="docs/screenshot.png" width="320" alt="Emoji-Suche nach „katze“ in der Spotlight-Suche unter iOS 12"></p>
+
 - Suchleiste „Emoji suchen“ oben in der Emoji-Tastatur
 - Such-Panel mit Ergebnisreihe und Buchstabentasten im Layout der Tastatursprache (QWERTZ, AZERTY, QWERTY, Kyrillisch, Griechisch, Hebräisch, Arabisch …)
 - **Offline:** Unicode Emoji 18.0 und CLDR 48.2 Stichwörter, 143 Sprachen
