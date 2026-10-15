@@ -1,0 +1,9 @@
+Package: com.matthias.emojisearch12
+Name: EmojiSearch12
+Version: 1.0.3
+Architecture: iphoneos-arm
+Description: Emoji-Suche für die Stock-Tastatur (iOS 12). Suchleiste über den Emojis, offline, in der Sprache der Tastatur, unterstützt neuere Emojis (EmojiPort).
+Maintainer: Matthias
+Author: Matthias
+Section: Tweaks
+Depends: mobilesubstrate, preferenceloader, firmware (>= 12.0)
