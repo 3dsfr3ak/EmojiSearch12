@@ -1,36 +1,38 @@
 # EmojiSearch12
 
-Emoji-Suche für die Stock-Tastatur unter **iOS 12** (Jailbreak) – wie ab iOS 14, mit Suchleiste oberhalb der Emojis.
+Emoji search for the stock keyboard on **iOS 12** (jailbreak tweak). It works like iOS 14 and later, with a search bar above the emoji.
 
-<p align="center"><img src="docs/screenshot.png" width="320" alt="Emoji-Suche nach „katze“ in der Spotlight-Suche unter iOS 12"></p>
+<p align="center"><img src="docs/screenshot.png" width="320" alt="Searching emoji for “katze” (German for cat) in Spotlight on iOS 12"></p>
 
-- Suchleiste „Emoji suchen“ oben in der Emoji-Tastatur
-- Such-Panel mit Ergebnisreihe und Buchstabentasten im Layout der Tastatursprache (QWERTZ, AZERTY, QWERTY, Kyrillisch, Griechisch, Hebräisch, Arabisch …)
-- **Offline:** Unicode Emoji 18.0 und CLDR 48.2 Stichwörter, 143 Sprachen
-- Sucht in der Sprache der zuletzt benutzten Tastatur, Englisch als Fallback
-- Zeigt nur Emojis, die der installierte Emoji-Font darstellen kann, neuere Emojis über [EmojiPort](https://github.com/PoomSmart) eingeschlossen
+- A “Search Emoji” bar at the top of the emoji keyboard
+- A search panel with a results row and letter keys in the layout of your keyboard language (QWERTZ, AZERTY, QWERTY, Cyrillic, Greek, Hebrew, Arabic …)
+- **Works offline:** Unicode Emoji 18.0 and CLDR 48.2 keywords in 143 languages
+- Searches in the language of the last used keyboard, with English as a fallback
+- Only shows emoji that the installed emoji font can render, including newer emoji added with [EmojiPort](https://github.com/PoomSmart)
 
 ## Installation
-Das `.deb` aus den [Releases](../../releases) per Sileo, Zebra, Cydia, Filza oder `dpkg -i` installieren, dann respringen.
+Install the `.deb` from [Releases](../../releases) with Sileo, Zebra, Cydia, Filza or `dpkg -i`, then respring.
 
-Abhängigkeiten: `mobilesubstrate` (bzw. libhooker/Substitute), `preferenceloader`. Nur rootful.
+Dependencies: `mobilesubstrate` (or libhooker/Substitute) and `preferenceloader`. Rootful only.
 
-Getestet auf einem iPhone 5s mit iOS 12.5.8 (libhooker). Das Paket enthält nur `arm64`, daher wird es auf A12-Geräten (iPhone XS/XR) in Apples eigenen Apps vermutlich nicht geladen.
+Tested on an iPhone 5s running iOS 12.5.8 (libhooker). The package only contains `arm64`, so on A12 devices (iPhone XS/XR) it will probably not load into Apple's own apps.
 
-## Bedienung
-1. In der Emoji-Tastatur auf „Emoji suchen“ tippen.
-2. Suchbegriff eingeben. Groß-/Kleinschreibung und Akzente sind egal („uber“ findet „über“), Wortteile werden gefunden („katze“ findet „Hauskatze“).
-3. Auf ein Ergebnis tippen, um es einzufügen. Das Panel bleibt offen.
-4. `☺︎` führt zurück zur Emoji-Liste. Bei nicht-lateinischen Sprachen wechselt `ABC`/`🌐` zwischen Sprachlayout und QWERTY.
+If the search bar does not show up in a particular app, check whether a tool like Choicy has disabled tweak injection for that app.
 
-Hautfarben-Varianten werden nicht gelistet, nur das Basis-Emoji. Emojis aus der Suche landen nicht unter „Häufig benutzt“.
+## Usage
+1. In the emoji keyboard, tap “Search Emoji”.
+2. Type a search term. Case and accents don't matter (“uber” finds “über”), and parts of words match (“cat” finds “wildcat”).
+3. Tap a result to insert it. The panel stays open.
+4. `☺︎` returns to the emoji list. For non-Latin languages, `ABC`/`🌐` switches between the language layout and QWERTY.
 
-## Einstellungen
-Einstellungen → EmojiSearch12:
-- **Logging** (Standard: aus): Diagnose-Meldungen in die Systemkonsole (Mac: App „Konsole“, Filter `EmojiSearch12`). Prozesse ohne Sandbox wie der SpringBoard schreiben zusätzlich nach `/var/mobile/Library/Logs/EmojiSearch12.log`. Wirkt ohne Respring.
+Skin tone variants are not listed, only the base emoji. Emoji inserted from search are not added to “Frequently Used”.
 
-## Selbst bauen
-Benötigt macOS mit den Xcode Command Line Tools und `ldid`. Theos und dpkg sind nicht nötig.
+## Settings
+Settings → EmojiSearch12:
+- **Logging** (off by default): writes diagnostic messages to the system log. On a Mac, view them in the Console app and filter for `EmojiSearch12`. Processes without a sandbox, such as SpringBoard, also write to `/var/mobile/Library/Logs/EmojiSearch12.log`. Takes effect without a respring.
+
+## Building
+Requires macOS with the Xcode Command Line Tools and `ldid`. Theos and dpkg are not needed.
 
 ```bash
 tools/fetch_deps.sh
@@ -40,15 +42,15 @@ tools/fetch_deps.sh
 CC=/Library/Developer/CommandLineTools/usr/bin/clang ./build.sh
 ```
 
-`fetch_deps.sh` lädt das iPhoneOS 12.4 SDK ([theos/sdks](https://github.com/theos/sdks)), die CLDR-Annotationen (npm-Pakete `cldr-annotations-full` und `cldr-annotations-derived-full`) und `emoji-test.txt` von unicode.org nach `deps/`. Das `.deb` landet in `build/`.
+`fetch_deps.sh` downloads the iPhoneOS 12.4 SDK ([theos/sdks](https://github.com/theos/sdks)), the CLDR annotations (npm packages `cldr-annotations-full` and `cldr-annotations-derived-full`) and `emoji-test.txt` from unicode.org into `deps/`. The `.deb` ends up in `build/`.
 
-| Pfad | Inhalt |
+| Path | Contents |
 |---|---|
-| `src/Tweak.m` | Tweak: Hooks, Such-Engine, UI |
-| `tools/gen_emoji_data.py` | erzeugt die Such-Daten pro Sprache |
-| `tools/mkdeb.py` | baut das `.deb` (dpkg-deb-Ersatz) |
-| `tools/make_icon.m` | erzeugt das Einstellungs-Icon |
-| `prefs/` | PreferenceLoader-Seite |
+| `src/Tweak.m` | The tweak: hooks, search engine, UI |
+| `tools/gen_emoji_data.py` | Generates the search data for each language |
+| `tools/mkdeb.py` | Builds the `.deb` (replaces dpkg-deb) |
+| `tools/make_icon.m` | Generates the Settings icon |
+| `prefs/` | PreferenceLoader page |
 
-## Lizenz
-Code: [MIT](LICENSE). Die mitgelieferten Emoji-Daten stammen aus Unicode CLDR und den Unicode Emoji-Daten und stehen unter der [Unicode License v3](LICENSE-Unicode.txt).
+## License
+Code: [MIT](LICENSE). The bundled emoji data comes from Unicode CLDR and the Unicode emoji data files and is licensed under the [Unicode License v3](LICENSE-Unicode.txt).
